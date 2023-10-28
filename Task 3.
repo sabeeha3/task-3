@@ -1,0 +1,40 @@
+import re
+
+def check_password_strength(password):
+    # Regular expressions for different password requirements
+    length_regex = r'.{8,}'
+    uppercase_regex = r'[A-Z]'
+    lowercase_regex = r'[a-z]'
+    digit_regex = r'[0-9]'
+    special_char_regex = r'[!@#$%^&*(),.?":{}|<>]'
+    
+    # Check password length
+    if re.match(length_regex, password):
+        length_valid = True
+    else:
+        length_valid = False
+        
+    # Check uppercase, lowercase, digit, and special character presence
+    uppercase_valid = bool(re.search(uppercase_regex, password))
+    lowercase_valid = bool(re.search(lowercase_regex, password))
+    digit_valid = bool(re.search(digit_regex, password))
+    special_char_valid = bool(re.search(special_char_regex, password))
+    
+    # Evaluate password strength
+    if length_valid and uppercase_valid and lowercase_valid and digit_valid and special_char_valid:
+        return "Strong"
+    elif length_valid and uppercase_valid and lowercase_valid and digit_valid:
+        return "Medium"
+    elif length_valid and (uppercase_valid or lowercase_valid):
+        return "Weak"
+    else:
+        return "Very Weak ( use uppercase and lowercase letters, digits, and special characters.)"
+
+# Get password input from the user
+password = input("Enter your password: ")
+
+# Check password strength
+strength = check_password_strength(password)
+
+# Output the result
+print("Password Strength:", strength)
